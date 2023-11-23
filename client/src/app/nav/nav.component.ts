@@ -8,8 +8,22 @@ import { AccountService } from '../_services/account.service';
 })
 export class NavComponent {
   model: any = {};
+
   loggedIn = false;
+
   constructor(private accountService: AccountService) {}
+
+  ngOnInit(): void {
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {
+    this.accountService.currentUser$.subscribe({
+      next: (user) => (this.loggedIn = !!user),
+      error: (error) => console.log(error),
+    });
+  }
+
   login() {
     this.accountService.login(this.model).subscribe({
       next: (response) => {
@@ -21,7 +35,9 @@ export class NavComponent {
       },
     });
   }
+
   logout() {
+    this.accountService.logout();
     this.loggedIn = false;
   }
 }
