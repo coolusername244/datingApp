@@ -1,6 +1,7 @@
 ﻿using System.IO.Compression;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
@@ -10,7 +11,9 @@ namespace API.Helpers
   {
     public AutoMapperProfiles()
     {
-      CreateMap<AppUser, MemberDto>().ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url));
+      CreateMap<AppUser, MemberDto>().ForMember(dest => dest.PhotoUrl,
+          opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
+        .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
       CreateMap<Photo, PhotoDto>();
     }
   }
