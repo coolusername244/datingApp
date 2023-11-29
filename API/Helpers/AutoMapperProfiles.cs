@@ -1,9 +1,7 @@
-﻿using System.IO.Compression;
-using API.DTOs;
+﻿using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace API.Helpers
 {
