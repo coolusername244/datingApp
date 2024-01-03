@@ -30,6 +30,11 @@ export class MembersService {
   }
 
   updateMember(member: Member) {
-    return this.http.put(this.baseUrl + 'users', member);
+    return this.http.put(this.baseUrl + 'users', member).pipe(
+      map(() => {
+        const i = this.members.indexOf(member);
+        this.members[i] = { ...this.members[i], ...member };
+      })
+    );
   }
 }
